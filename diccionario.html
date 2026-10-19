@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cuentos chinos</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 20px;
+    min-height: 100vh;
+    color: #dbe7f5;
+    font-family: Arial, "Microsoft YaHei", sans-serif;
+
+    /* Azul noche y marino desaturados en lugar de azules saturados */
+    background: linear-gradient(
+        -45deg,
+        #050c1e,
+        #091b36,
+        #0e2a4f,
+        #111638,
+        #071428
+    );
+    background-size: 400% 400%;
+    animation: cielo 18s ease infinite;
+}
+
+@keyframes cielo {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.contenedor {
+    max-width: 760px;
+    margin: auto;
+}
+
+h1 {
+    font-size: 28px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+    color: #e3effd;
+    /* Resplandor atenuado */
+    text-shadow: 0 0 8px rgba(70, 150, 230, 0.4);
+    animation: brillo 4s ease-in-out infinite alternate;
+}
+
+@keyframes brillo {
+    from {
+        text-shadow: 0 0 6px rgba(70, 150, 230, 0.3);
+    }
+    to {
+        text-shadow: 0 0 12px rgba(100, 180, 255, 0.5);
+    }
+}
+
+.busqueda {
+    position: relative;
+    margin-bottom: 14px;
+}
+
+.lupa {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 22px;
+    color: #92beed;
+    pointer-events: none;
+}
+
+input {
+    width: 100%;
+    padding: 15px 15px 15px 47px;
+    border: 1px solid rgba(100, 160, 220, 0.3);
+    border-radius: 14px;
+    font-size: 18px;
+    color: #eef6ff;
+    background: rgba(15, 35, 65, 0.45);
+    backdrop-filter: blur(12px);
+    box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.25),
+        inset 0 0 8px rgba(255, 255, 255, 0.03);
+    outline: none;
+}
+
+input::placeholder {
+    color: #7a9bbd;
+}
+
+input:focus {
+    border-color: rgba(140, 190, 245, 0.6);
+    box-shadow: 0 0 12px rgba(75, 150, 230, 0.25);
+}
+
+.contador {
+    color: #92b3d6;
+    font-size: 14px;
+    margin: 12px 2px;
+}
+
+.lista {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.cuento {
+    display: block;
+    padding: 16px;
+    border-radius: 13px;
+    color: #e5f0fc;
+    text-decoration: none;
+    font-size: 18px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+
+    /* Fondo de las tarjetas suavizado */
+    background: linear-gradient(
+        120deg,
+        rgba(35, 75, 125, 0.35),
+        rgba(18, 48, 92, 0.45),
+        rgba(30, 80, 130, 0.25)
+    );
+
+    border: 1px solid rgba(110, 165, 220, 0.2);
+
+    box-shadow:
+        inset 0 0 10px rgba(255, 255, 255, 0.02),
+        0 4px 12px rgba(0, 5, 20, 0.25);
+
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.cuento:active {
+    transform: scale(0.98);
+    background: rgba(45, 95, 155, 0.45);
+    border-color: rgba(140, 190, 245, 0.4);
+    box-shadow: 0 0 12px rgba(60, 130, 210, 0.3);
+}
+
+.vocabulario {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.palabra {
+    background: linear-gradient(
+        135deg,
+        rgba(30, 70, 120, 0.35),
+        rgba(15, 45, 85, 0.45)
+    );
+    border: 1px solid rgba(110, 165, 220, 0.2);
+    border-radius: 13px;
+    padding: 16px;
+
+    box-shadow:
+        inset 0 0 10px rgba(255, 255, 255, 0.02),
+        0 4px 12px rgba(0, 5, 20, 0.25);
+
+    text-align: center;
+}
+
+.chino {
+    font-size: 27px;
+    margin-bottom: 7px;
+    color: #eaf3ff;
+    text-shadow: 0 0 8px rgba(90, 160, 240, 0.35);
+}
+
+.espanol {
+    color: #b5ceea;
+    font-size: 16px;
+}
+
+.volver {
+    display: inline-block;
+    padding: 11px 15px;
+    margin-bottom: 10px;
+    color: #d5e5f7;
+    text-decoration: none;
+    border: 1px solid rgba(110, 165, 220, 0.25);
+    border-radius: 12px;
+    background: rgba(30, 70, 120, 0.3);
+}
+
+.vacio {
+    display: none;
+    padding: 25px 5px;
+    color: #92b3d6;
+}
+
+.oculto {
+    display: none !important;
+}
+
+@media (min-width: 600px) {
+    .vocabulario {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body, h1 {
+        animation: none;
+    }
+
+    .cuento {
+        transition: none;
+    }
+}
+</style>
+</head>
+
+<body>
+<div class="contenedor">
+
+    <!-- ÍNDICE -->
+    <section id="indice">
+        <h1>Cuentos chinos</h1>
+
+        <div class="busqueda">
+            <span class="lupa">⌕</span>
+            <input id="buscar" type="search"
+                placeholder="Buscar título en chino..."
+                autocomplete="off"
+                aria-label="Buscar cuento">
+        </div>
+
+        <div class="contador" id="contador"></div>
+        <div class="lista" id="lista"></div>
+        <div class="vacio" id="vacio">
+            No se encontraron cuentos.
+        </div>
+    </section>
+
+    <!-- PÁGINA DEL CUENTO -->
+    <section id="pagina" class="oculto">
+        <a href="#" class="volver" id="volver">← Volver a los cuentos</a>
+        <h1 id="titulo"></h1>
+        <div class="contador" id="totalPalabras"></div>
+        <div class="vocabulario" id="vocabulario"></div>
+    </section>
+
+</div>
+
+<script src="cuentos.js"></script>
+<script>
+const TITULOS = Object.keys(CUENTOS);
+
+const indice = document.getElementById("indice");
+const pagina = document.getElementById("pagina");
+const lista = document.getElementById("lista");
+const buscar = document.getElementById("buscar");
+const contador = document.getElementById("contador");
+const vacio = document.getElementById("vacio");
+const titulo = document.getElementById("titulo");
+const vocabulario = document.getElementById("vocabulario");
+
+function mostrarIndice() {
+    pagina.classList.add("oculto");
+    indice.classList.remove("oculto");
+    history.replaceState(null, "", location.pathname);
+}
+
+function abrirCuento(nombre) {
+    titulo.textContent = nombre;
+    vocabulario.replaceChildren();
+
+    const palabras = CUENTOS[nombre];
+
+    for (const [chino, espanol] of Object.entries(palabras)) {
+        const tarjeta = document.createElement("div");
+        tarjeta.className = "palabra";
+
+        const palabraChina = document.createElement("div");
+        palabraChina.className = "chino";
+        palabraChina.lang = "zh";
+        palabraChina.textContent = chino;
+
+        const traduccion = document.createElement("div");
+        traduccion.className = "espanol";
+        traduccion.textContent = espanol;
+
+        tarjeta.append(palabraChina, traduccion);
+        vocabulario.appendChild(tarjeta);
+    }
+
+    document.getElementById("totalPalabras").textContent =
+        Object.keys(palabras).length + " palabras";
+
+    indice.classList.add("oculto");
+    pagina.classList.remove("oculto");
+    history.replaceState(null, "", "#cuento");
+    window.scrollTo(0, 0);
+}
+
+TITULOS.forEach(nombre => {
+    const enlace = document.createElement("a");
+    enlace.className = "cuento";
+    enlace.href = "#cuento";
+    enlace.textContent = nombre;
+
+    enlace.addEventListener("click", evento => {
+        evento.preventDefault();
+        abrirCuento(nombre);
+    });
+
+    lista.appendChild(enlace);
+});
+
+function filtrar() {
+    const texto = buscar.value.trim().toLocaleLowerCase();
+    let visibles = 0;
+
+    lista.querySelectorAll(".cuento").forEach(enlace => {
+        const coincide = enlace.textContent
+            .toLocaleLowerCase().includes(texto);
+
+        enlace.style.display = coincide ? "block" : "none";
+        if (coincide) visibles++;
+    });
+
+    contador.textContent = visibles + " de " + TITULOS.length + " cuentos";
+    vacio.style.display = visibles === 0 ? "block" : "none";
+}
+
+buscar.addEventListener("input", filtrar);
+document.getElementById("volver").addEventListener("click", evento => {
+    evento.preventDefault();
+    mostrarIndice();
+    window.scrollTo(0, 0);
+});
+
+filtrar();
+</script>
+</body>
+</html>
